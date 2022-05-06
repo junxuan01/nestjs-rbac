@@ -9,16 +9,25 @@ import {
   HttpStatus,
   UseInterceptors,
   ClassSerializerInterceptor,
+  UseGuards,
 } from '@nestjs/common';
 import { UserService } from './user.service';
 import { Request } from 'express';
-import { ApiOperation, ApiParam, ApiTags } from '@nestjs/swagger';
+import {
+  ApiBearerAuth,
+  ApiOperation,
+  ApiParam,
+  ApiTags,
+} from '@nestjs/swagger';
 
 // import { User } from './user.entity';
 import { CreateUserDto } from './user.dto';
+import { AuthGuard } from '@nestjs/passport';
 
 @UseInterceptors(ClassSerializerInterceptor)
+@UseGuards(AuthGuard('jwt'))
 @ApiTags('用户模块')
+@ApiBearerAuth('token认证')
 @Controller('users')
 export class UserController {
   constructor(private readonly userService: UserService) {}
