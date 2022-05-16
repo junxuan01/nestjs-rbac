@@ -7,10 +7,13 @@ import { HttpExecptionFilter } from './filters/http-execption.filter';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-  // 设置请求前缀
+  /**
+   * @description 设置请求前缀
+   */
   app.setGlobalPrefix('/api');
   /**
-   * swagger-ui 配置
+   * @description swagger-ui 配置
+   *
    */
   const options = new DocumentBuilder()
     .setTitle('API Factory')
@@ -22,10 +25,12 @@ async function bootstrap() {
   SwaggerModule.setup('api-doc', app, document);
   /**
    * 全局拦截器
+   * 用于过滤Http success请求, 统一返回格式
    */
   app.useGlobalInterceptors(new TransformInterceptor());
   /**
    * 全局过滤器
+   * 用于过滤Http error请求, 统一返回格式
    */
   app.useGlobalFilters(new HttpExecptionFilter());
   /**

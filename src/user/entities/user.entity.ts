@@ -4,19 +4,38 @@ import { Exclude } from 'class-transformer';
 
 @Entity('user')
 export class User {
-  @PrimaryGeneratedColumn('uuid')
+  /**
+   * id
+   */
+  @PrimaryGeneratedColumn()
   id: string;
-
+  /**
+   * 用户名
+   */
   @Column({ length: 100 })
   name: string;
-
+  /**
+   * 密码
+   */
   @Exclude()
   @Column()
   password: string;
-
+  /**
+   * 邮箱
+   */
+  @Exclude({})
+  @Column({
+    default: 'xx@qq.com',
+  })
+  mail: string;
+  /**
+   * 头像
+   */
   @Column({ default: '' })
-  avatar: string; //头像
-
+  avatar: string;
+  /**
+   * 是否激活
+   */
   @Column({ default: true })
   isActive: boolean;
 
@@ -36,6 +55,6 @@ export class User {
   @BeforeInsert()
   async encryptPwd() {
     console.log('GENERATE');
-    this.password = await hashSync(this.password, 10);
+    this.password = hashSync(this.password, 10);
   }
 }
