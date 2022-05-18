@@ -10,25 +10,15 @@ import { User } from '../../user/entities/user.entity';
 
 @Entity('role')
 export class Role {
-  /**
-   * 角色id
-   */
-  @PrimaryGeneratedColumn()
+  @PrimaryGeneratedColumn({ comment: '角色id' })
   id: string;
-  /**
-   * 角色名称
-   */
   @Column({ length: 100, comment: '角色名称' })
   name: string;
-  /**
-   * 是否激活
-   */
+  @Column({ length: 100, comment: '角色code' })
+  code: string;
   @Column({ default: 1, comment: '状态 1:启用 0:禁用' })
   status: number;
-  /**
-   * 描述
-   */
-  @Column({ length: 100, comment: '描述' })
+  @Column({ length: 100, default: '', comment: '描述' })
   desc: string;
 
   @Column({
