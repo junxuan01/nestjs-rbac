@@ -39,12 +39,18 @@ export class User {
   @Column({ default: true })
   isActive: boolean;
 
+  /**
+   * 创建时间
+   */
   @Column({
     name: 'create_time',
     type: 'timestamp',
     default: () => 'CURRENT_TIMESTAMP',
   })
   createTime: Date;
+  /**
+   * 更新时间
+   */
   @Column({
     name: 'update_time',
     type: 'timestamp',

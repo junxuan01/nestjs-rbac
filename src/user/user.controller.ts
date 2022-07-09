@@ -30,7 +30,7 @@ export class UserController {
   @ApiOperation({ summary: '查询用户列表' })
   @ApiHeader({ name: 'token', required: true })
   getUsers(@Req() request: Request): any {
-    console.log(request.query);
+    console.log('请求用户列表==========');
     return this.userService.findAll();
   }
 

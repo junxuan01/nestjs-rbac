@@ -1,17 +1,23 @@
+declare const module: any;
+
 import { NestFactory } from '@nestjs/core';
-import { BadRequestException, ValidationPipe } from '@nestjs/common';
+import { ValidationPipe } from '@nestjs/common';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { AppModule } from './app.module';
-import { TransformInterceptor } from './interceptor/transform.interceptor';
-import { HttpExecptionFilter } from './filters/http-execption.filter';
-import { ValidationError } from 'class-validator';
+import { TransformInterceptor } from './common/interceptor/transform.interceptor';
+import { HttpExecptionFilter } from './common/filters/http.execption.filter';
+import { AllExceptionsFilter } from './common/filters/base.exception.filter';
 
+// import { getConfig } from '@/utils/index';
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+  // console.log('mysql环境', getConfig('mysql'));
+  const app = await NestFactory.create(AppModule, {
+    logger: ['error', 'debug', 'log', 'warn'],
+  });
   /**
    * @description 设置请求前缀
    */
-  app.setGlobalPrefix('/api');
+  app.setGlobalPrefix('/apis');
   /**
    * @description swagger-ui 配置
    *
@@ -33,7 +39,7 @@ async function bootstrap() {
    * 全局过滤器
    * 用于过滤Http error请求, 统一返回格式
    */
-  app.useGlobalFilters(new HttpExecptionFilter());
+  app.useGlobalFilters(new AllExceptionsFilter(), new HttpExecptionFilter());
   /**
    * 管道校验
    */
@@ -42,7 +48,11 @@ async function bootstrap() {
       transform: true,
     }),
   );
-
+  // 添加热更新
+  if (module.hot) {
+    module.hot.accept();
+    module.hot.dispose(() => app.close());
+  }
   await app.listen(3000);
 }
 bootstrap();
