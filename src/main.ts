@@ -10,7 +10,6 @@ import { AllExceptionsFilter } from './common/filters/base.exception.filter';
 
 // import { getConfig } from '@/utils/index';
 async function bootstrap() {
-  // console.log('mysql环境', getConfig('mysql'));
   const app = await NestFactory.create(AppModule, {
     logger: ['error', 'debug', 'log', 'warn'],
   });
@@ -39,7 +38,7 @@ async function bootstrap() {
    * 全局过滤器
    * 用于过滤Http error请求, 统一返回格式
    */
-  app.useGlobalFilters(new AllExceptionsFilter(), new HttpExecptionFilter());
+  app.useGlobalFilters(new HttpExecptionFilter());
   /**
    * 管道校验
    */
@@ -53,6 +52,7 @@ async function bootstrap() {
     module.hot.accept();
     module.hot.dispose(() => app.close());
   }
+  // app.enableCors();
   await app.listen(3000);
 }
 bootstrap();

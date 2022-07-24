@@ -8,3 +8,5 @@ mysql:
   entities: ['dist/**/*.entity{.ts,.js}']
   entityPrefix: 't_'
   synchronize: true
+
+port: 3000
