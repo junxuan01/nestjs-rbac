@@ -1,6 +1,6 @@
 export default {
   type: 'mysql',
-  host: 'rm-2vcm1f8gb4125ppb9co.mysql.cn-chengdu.rds.aliyuncs.com',
+  host: 'localhost',
   port: 3306,
   username: 'root',
   password: 'gxw1990**',

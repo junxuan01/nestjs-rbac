@@ -36,7 +36,7 @@ export class Role {
   })
   updateTime: Date;
 
-  @ManyToMany(() => User)
-  @JoinTable()
-  users: User[];
+  // @ManyToMany(() => User)
+  // @JoinTable()
+  // users: User[];
 }

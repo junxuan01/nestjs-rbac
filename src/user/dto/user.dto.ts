@@ -10,3 +10,12 @@ export class CreateUserDto {
   @IsNotEmpty({ message: '密码必填' })
   password: string;
 }
+export class SetRolesDto {
+  @IsNotEmpty()
+  @ApiProperty({ example: 1, description: '用户ID' })
+  userId: number;
+
+  @IsNotEmpty()
+  @ApiProperty({ example: [1], description: '角色ID' })
+  roleIds: number[];
+}

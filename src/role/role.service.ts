@@ -27,8 +27,8 @@ export class RoleService {
     });
   }
 
-  update(code: string, updateRoleDto: UpdateRoleDto) {
-    return `This action updates a #${code} role`;
+  update(updateRoleDto: UpdateRoleDto) {
+    return this.roleRepository.save(updateRoleDto);
   }
 
   remove(code: string) {

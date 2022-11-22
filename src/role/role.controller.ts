@@ -15,6 +15,7 @@ import { UpdateRoleDto } from './dto/update-role.dto';
 import { ApiHeader, ApiOperation, ApiParam, ApiTags } from '@nestjs/swagger';
 
 @ApiHeader({ name: 'token', required: true })
+@ApiTags('角色模块')
 @Controller('role')
 export class RoleController {
   constructor(private readonly roleService: RoleService) {}
@@ -31,21 +32,25 @@ export class RoleController {
   }
 
   @Get('/list')
+  @ApiOperation({ summary: '查询角色列表' })
   findAll() {
     return this.roleService.findAll();
   }
 
   @Get(':code')
+  @ApiOperation({ summary: '根据角色code查询角色' })
   findOneByCode(@Param('code') code: string) {
     return this.roleService.findOneByCode(code);
   }
 
-  @Patch(':code')
-  update(@Param('code') code: string, @Body() updateRoleDto: UpdateRoleDto) {
-    return this.roleService.update(code, updateRoleDto);
+  @Post('update')
+  @ApiOperation({ summary: '修改角色信息' })
+  update(@Body() updateRoleDto: UpdateRoleDto) {
+    return this.roleService.update(updateRoleDto);
   }
 
   @Delete(':code')
+  @ApiOperation({ summary: '删除角色信息' })
   remove(@Param('code') code: string) {
     return this.roleService.remove(code);
   }

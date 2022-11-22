@@ -15,15 +15,17 @@ import { UserService } from './user.service';
 import { Request } from 'express';
 import { ApiHeader, ApiOperation, ApiParam, ApiTags } from '@nestjs/swagger';
 
-// import { User } from './user.entity';
-import { CreateUserDto } from './dto/user.dto';
+import { CreateUserDto, SetRolesDto } from './dto/user.dto';
 import { AuthGuard } from '@nestjs/passport';
+// import { UserRoleService } from '@/user-role/user-role.service';
 
 @UseInterceptors(ClassSerializerInterceptor)
 @ApiTags('用户模块')
 @Controller('users')
 export class UserController {
-  constructor(private readonly userService: UserService) {}
+  constructor(
+    private readonly userService: UserService, // private readonly userRoleService: UserRoleService,
+  ) {}
 
   @UseGuards(AuthGuard('jwt'))
   @Get(`list`)
@@ -50,7 +52,7 @@ export class UserController {
 
   @UseGuards(AuthGuard('jwt'))
   @Get(`:id`)
-  @ApiOperation({ summary: '查询用户' })
+  @ApiOperation({ summary: '根据id查询用户' })
   @ApiParam({
     name: '用户Id',
     description: '用户Id的描述',
@@ -60,4 +62,12 @@ export class UserController {
   getUserById(@Param('id') id: string): any {
     return this.userService.findOneById(id);
   }
+
+  // @ApiOperation({
+  //   summary: '设置用户角色',
+  // })
+  // @Post('setRoles')
+  // async setRoles(@Body() dto: SetRolesDto) {
+  //   return await this.userRoleService.setUserRoles(dto.userId, dto.roleIds);
+  // }
 }
