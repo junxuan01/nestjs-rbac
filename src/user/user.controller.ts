@@ -17,14 +17,15 @@ import { ApiHeader, ApiOperation, ApiParam, ApiTags } from '@nestjs/swagger';
 
 import { CreateUserDto, SetRolesDto } from './dto/user.dto';
 import { AuthGuard } from '@nestjs/passport';
-// import { UserRoleService } from '@/user-role/user-role.service';
+import { UserRoleService } from '@/user-role/user-role.service';
 
 @UseInterceptors(ClassSerializerInterceptor)
 @ApiTags('用户模块')
 @Controller('users')
 export class UserController {
   constructor(
-    private readonly userService: UserService, // private readonly userRoleService: UserRoleService,
+    private readonly userService: UserService,
+    private readonly userRoleService: UserRoleService,
   ) {}
 
   @UseGuards(AuthGuard('jwt'))
@@ -63,11 +64,11 @@ export class UserController {
     return this.userService.findOneById(id);
   }
 
-  // @ApiOperation({
-  //   summary: '设置用户角色',
-  // })
-  // @Post('setRoles')
-  // async setRoles(@Body() dto: SetRolesDto) {
-  //   return await this.userRoleService.setUserRoles(dto.userId, dto.roleIds);
-  // }
+  @ApiOperation({
+    summary: '设置用户角色',
+  })
+  @Post('setRoles')
+  async setRoles(@Body() dto: SetRolesDto) {
+    return await this.userRoleService.setUserRoles(dto.userId, dto.roleIds);
+  }
 }

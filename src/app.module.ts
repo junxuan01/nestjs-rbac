@@ -11,6 +11,7 @@ import { RoleModule } from './role/role.module';
 // import { AuroraMysqlConnectionOptions } from 'typeorm/driver/aurora-mysql/AuroraMysqlConnectionOptions';
 
 import { getConfig } from '@/utils';
+import { UserRoleModule } from './user-role/user-role.module';
 
 console.log('mysql配置', getConfig('mysql'));
 
@@ -25,6 +26,7 @@ console.log('mysql配置', getConfig('mysql'));
     UsersModule,
     AuthModule,
     RoleModule,
+    UserRoleModule,
   ],
   controllers: [AppController],
   providers: [AppService],
