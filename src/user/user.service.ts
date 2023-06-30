@@ -3,12 +3,14 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Like, Repository } from 'typeorm';
 import { User } from './entities/user.entity';
 import { CreateUserDto } from './dto/user.dto';
+import { LoggerService } from '@/logger/logger.service';
 
 @Injectable()
 export class UserService {
   constructor(
     @InjectRepository(User)
     private usersRepository: Repository<User>,
+    private readonly logger: LoggerService,
   ) {}
 
   /**
@@ -23,6 +25,7 @@ export class UserService {
   }
 
   findAll(searchParams): Promise<User[]> {
+    this.logger.info('正在查询所有用户');
     const conditions = {
       ...searchParams,
     };

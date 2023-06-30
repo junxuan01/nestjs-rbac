@@ -12,6 +12,7 @@ import { RoleModule } from './role/role.module';
 
 import { getConfig } from '@/utils';
 import { UserRoleModule } from './user-role/user-role.module';
+import { LoggerModule } from './logger/logger.module';
 
 console.log('mysql配置', getConfig('mysql'));
 
@@ -27,6 +28,7 @@ console.log('mysql配置', getConfig('mysql'));
     AuthModule,
     RoleModule,
     UserRoleModule,
+    LoggerModule,
   ],
   controllers: [AppController],
   providers: [AppService],
