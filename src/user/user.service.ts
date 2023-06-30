@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { Like, Repository } from 'typeorm';
 import { User } from './entities/user.entity';
 import { CreateUserDto } from './dto/user.dto';
 
@@ -10,6 +10,7 @@ export class UserService {
     @InjectRepository(User)
     private usersRepository: Repository<User>,
   ) {}
+
   /**
    *
    * @param createUserDto CreateUserDto
@@ -21,8 +22,20 @@ export class UserService {
     );
   }
 
-  findAll(): Promise<User[]> {
-    return this.usersRepository.find();
+  findAll(searchParams): Promise<User[]> {
+    const conditions = {
+      ...searchParams,
+    };
+    if (conditions.name || conditions.name == '') {
+      conditions.name = Like(`%${conditions.name}%`);
+    }
+    return this.usersRepository.find({
+      where: {
+        ...conditions,
+        // name: Like(`%${searchParams.name}%`),
+        // name: searchParams.name,
+      },
+    });
   }
 
   findOneById(id: string): Promise<User> {
@@ -30,6 +43,7 @@ export class UserService {
       where: { id: id },
     });
   }
+
   findOneByName(name: string): Promise<User> {
     return this.usersRepository.findOne({
       where: { name: name },

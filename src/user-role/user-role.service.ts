@@ -11,7 +11,8 @@ export class UserRoleService {
     @InjectRepository(UserRole)
     private userRoleRepository: Repository<UserRole>,
   ) {}
-  listByUserId(userId: number) {
+
+  listByUserId(userId: string) {
     return this.userRoleRepository.find({
       where: {
         userId,
@@ -19,13 +20,13 @@ export class UserRoleService {
     });
   }
 
-  deleteByUserId(userId: number) {
+  deleteByUserId(userId: string) {
     return this.userRoleRepository.delete({
       userId,
     });
   }
 
-  async setUserRoles(userId: number, roleIds: number[]) {
+  async setUserRoles(userId: string, roleIds: number[]) {
     const userRoles: UserRole[] = roleIds.map((roleId) => {
       return {
         userId,

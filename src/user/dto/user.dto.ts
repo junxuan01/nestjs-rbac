@@ -9,13 +9,25 @@ export class CreateUserDto {
   @ApiProperty({ description: '密码', example: '1q1q1q', required: true })
   @IsNotEmpty({ message: '密码必填' })
   password: string;
+
+  @ApiProperty({ description: '角色Ids', example: '[1,2,3]', required: false })
+  rolesId: number[];
 }
+
 export class SetRolesDto {
   @IsNotEmpty()
   @ApiProperty({ example: 1, description: '用户ID' })
-  userId: number;
+  userId: string;
 
   @IsNotEmpty()
   @ApiProperty({ example: [1], description: '角色ID' })
   roleIds: number[];
+}
+
+export class SearchUserDto {
+  @ApiProperty({ example: 1, description: '用户ID' })
+  userId: string;
+
+  @ApiProperty({ example: [1], description: '用户名' })
+  name: string;
 }
