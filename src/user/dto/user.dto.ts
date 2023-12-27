@@ -25,9 +25,14 @@ export class SetRolesDto {
 }
 
 export class SearchUserDto {
-  @ApiProperty({ example: 1, description: '用户ID' })
+  @ApiProperty({ required: false, example: 1, description: '用户ID' })
   userId: string;
 
-  @ApiProperty({ example: [1], description: '用户名' })
+  @ApiProperty({ required: false, example: '张三', description: '用户名' })
   name: string;
+
+  @ApiProperty({ required: true, example: 1, description: '当前页数' })
+  page?: number;
+  @ApiProperty({ required: true, example: 10, description: '当前条数' })
+  pageSize?: number;
 }

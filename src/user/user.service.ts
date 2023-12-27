@@ -1,8 +1,14 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Like, Repository } from 'typeorm';
+import { Like, Repository, FindManyOptions } from 'typeorm';
+import {
+  IPaginationOptions,
+  paginate,
+  Pagination,
+} from 'nestjs-typeorm-paginate';
+
 import { User } from './entities/user.entity';
-import { CreateUserDto } from './dto/user.dto';
+import { CreateUserDto, SearchUserDto } from './dto/user.dto';
 import { LoggerService } from '@/logger/logger.service';
 
 @Injectable()
@@ -22,6 +28,23 @@ export class UserService {
     return await this.usersRepository.save(
       this.usersRepository.create(createUserDto),
     );
+  }
+  findAllByPage(searchParams: SearchUserDto) {
+    this.logger.info('正在分页查询所有用户');
+    const { page, pageSize } = searchParams;
+    const queryBuilder = this.usersRepository.createQueryBuilder('user');
+
+    if (searchParams.userId) {
+      queryBuilder.andWhere('user.userId = :userId', {
+        userId: searchParams.userId,
+      });
+    }
+    if (searchParams.name) {
+      queryBuilder.andWhere('user.name LIKE :name', {
+        name: `%${searchParams.name}%`,
+      });
+    }
+    return paginate<User>(queryBuilder, { page, limit: pageSize });
   }
 
   findAll(searchParams): Promise<User[]> {

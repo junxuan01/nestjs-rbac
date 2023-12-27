@@ -1,5 +1,4 @@
-
-## 
+##  
 
 [Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
 
@@ -44,7 +43,8 @@ $ nest g resource users
 
 ## Support
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If
+you'd like to join them, please [read more here](https://docs.nestjs.com/support).
 
 ## Stay in touch
 
@@ -55,3 +55,7 @@ Nest is an MIT-licensed open source project. It can grow thanks to the sponsors 
 ## License
 
 Nest is [MIT licensed](LICENSE).
+
+## 数据库连接
+
+1. 放在.config文件夹，不同环境对应不同的yaml文件

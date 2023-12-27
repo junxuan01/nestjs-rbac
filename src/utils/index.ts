@@ -7,8 +7,10 @@ export const getEnv = () => {
   return process.env.RUNNING_ENV;
 };
 
+export type DataBaseType = 'mysql' | 'mongodb';
+
 // 读取项目配置
-export const getConfig = (type?: string) => {
+export const getConfig = (type?: DataBaseType) => {
   const environment = getEnv() || 'dev';
   const yamlPath = path.join(process.cwd(), `./.config/.${environment}.yaml`);
   const file = fs.readFileSync(yamlPath, 'utf8');
