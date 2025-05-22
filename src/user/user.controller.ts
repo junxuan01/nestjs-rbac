@@ -31,7 +31,7 @@ export class UserController {
     private readonly userRoleService: UserRoleService,
   ) {}
 
-  @ApiOperation({ summary: '查询用户列表' })
+  @ApiOperation({ summary: '查询用户列表', operationId: 'getUsers' })
   @UseGuards(AuthGuard('jwt'))
   @Post(`list`)
   getUsers(@Req() request: Request, @Body() searchUserDto: SearchUserDto): any {
@@ -39,7 +39,7 @@ export class UserController {
     return this.userService.findAll(searchUserDto);
   }
 
-  @ApiOperation({ summary: '查询用户列表(分页)' })
+  @ApiOperation({ summary: '查询用户列表(分页)', operationId: 'getUsersPage' })
   @UseGuards(AuthGuard('jwt'))
   @Post(`list/page`)
   getUsersPage(
@@ -55,7 +55,7 @@ export class UserController {
     // return this.userService.findAll(searchUserDto);
   }
 
-  @ApiOperation({ summary: '创建用户' })
+  @ApiOperation({ summary: '创建用户', operationId: 'createUser' })
   @Post()
   async createUser(
     @Req() request: Request,
@@ -73,7 +73,7 @@ export class UserController {
     });
   }
 
-  @ApiOperation({ summary: '根据id查询用户' })
+  @ApiOperation({ summary: '根据id查询用户', operationId: 'getUserById' })
   @UseGuards(AuthGuard('jwt'))
   @Get(`:id`)
   @ApiParam({
@@ -86,7 +86,7 @@ export class UserController {
     return this.userService.findOneById(id);
   }
 
-  @ApiOperation({ summary: '根据用户名查询用户' })
+  @ApiOperation({ summary: '根据用户名查询用户', operationId: 'getUserByName' })
   @UseGuards(AuthGuard('jwt'))
   @Get()
   @ApiParam({
@@ -99,7 +99,7 @@ export class UserController {
     return this.userService.findOneByName(name);
   }
 
-  @ApiOperation({ summary: '设置用户角色' })
+  @ApiOperation({ summary: '设置用户角色', operationId: 'setRoles' })
   @Post('setRoles')
   async setRoles(@Body() dto: SetRolesDto) {
     return await this.userRoleService.setUserRoles(dto.userId, dto.roleIds);
