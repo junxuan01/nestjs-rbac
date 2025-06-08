@@ -15,13 +15,13 @@ import { UpdateRoleDto } from './dto/update-role.dto';
 import { ApiHeader, ApiOperation, ApiParam, ApiTags } from '@nestjs/swagger';
 
 @ApiHeader({ name: 'token', required: true })
-@ApiTags('角色模块')
+@ApiTags('roleCenter')
 @Controller('role')
 export class RoleController {
   constructor(private readonly roleService: RoleService) {}
 
   @Post()
-  @ApiOperation({ summary: '创建角色', operationId: 'create' })
+  @ApiOperation({ summary: '创建角色', operationId: 'createRole' })
   async create(@Body() createRoleDto: CreateRoleDto): Promise<any> {
     const { code } = createRoleDto;
     const existRole = await this.roleService.findOneByCode(code);
@@ -32,7 +32,7 @@ export class RoleController {
   }
 
   @Get('/list')
-  @ApiOperation({ summary: '查询角色列表', operationId: 'findAll' })
+  @ApiOperation({ summary: '查询角色列表', operationId: 'getRoleList' })
   findAll() {
     return this.roleService.findAll();
   }
@@ -40,20 +40,20 @@ export class RoleController {
   @Get(':code')
   @ApiOperation({
     summary: '根据角色code查询角色',
-    operationId: 'findOneByCode',
+    operationId: 'getRoleByCode',
   })
   findOneByCode(@Param('code') code: string) {
     return this.roleService.findOneByCode(code);
   }
 
   @Post('update')
-  @ApiOperation({ summary: '修改角色信息', operationId: 'update' })
+  @ApiOperation({ summary: '修改角色信息', operationId: 'updateRole' })
   update(@Body() updateRoleDto: UpdateRoleDto) {
     return this.roleService.update(updateRoleDto);
   }
 
   @Delete(':code')
-  @ApiOperation({ summary: '删除角色信息', operationId: 'remove' })
+  @ApiOperation({ summary: '删除角色信息', operationId: 'removeRole' })
   remove(@Param('code') code: string) {
     return this.roleService.remove(code);
   }

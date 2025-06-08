@@ -23,7 +23,7 @@ import { UserRoleService } from '@/user-role/user-role.service';
 import { User } from '@/user/entities/user.entity';
 
 @UseInterceptors(ClassSerializerInterceptor)
-@ApiTags('用户模块')
+@ApiTags('userCenter')
 @Controller('users')
 export class UserController {
   constructor(

@@ -14,12 +14,12 @@ import { AuthService } from './auth.service';
 import { ApiOperation, ApiParam, ApiTags } from '@nestjs/swagger';
 import { LoginDto } from './auth.dto';
 
-@ApiTags('认证模块')
+@ApiTags('authCenter')
 @Controller('auth')
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
-  @ApiOperation({ summary: '登录' })
+  @ApiOperation({ summary: '登录', operationId: 'login' })
   @UseGuards(AuthGuard('local'))
   @UseInterceptors(ClassSerializerInterceptor)
   @Post('/login')
