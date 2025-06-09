@@ -17,10 +17,20 @@ import { UserService } from './user.service';
 import { Request } from 'express';
 import { ApiHeader, ApiOperation, ApiParam, ApiTags } from '@nestjs/swagger';
 
-import { CreateUserDto, SetRolesDto, SearchUserDto } from './dto/user.dto';
+import {
+  CreateUserDto,
+  SetRolesDto,
+  SearchUserDto,
+  UserListDataDto,
+  UserPageDataDto,
+  UserDataDto,
+  CreateUserDataDto,
+  SetRolesDataDto,
+} from './dto/user.dto';
 import { AuthGuard } from '@nestjs/passport';
 import { UserRoleService } from '@/user-role/user-role.service';
 import { User } from '@/user/entities/user.entity';
+import { ApiSuccessResponse } from '@/common/decorators/api-response.decorator';
 
 @UseInterceptors(ClassSerializerInterceptor)
 @ApiTags('userCenter')
@@ -32,6 +42,7 @@ export class UserController {
   ) {}
 
   @ApiOperation({ summary: '查询用户列表', operationId: 'getUsers' })
+  @ApiSuccessResponse(UserListDataDto, '查询用户列表成功')
   @UseGuards(AuthGuard('jwt'))
   @Post(`list`)
   getUsers(@Req() request: Request, @Body() searchUserDto: SearchUserDto): any {
@@ -40,6 +51,7 @@ export class UserController {
   }
 
   @ApiOperation({ summary: '查询用户列表(分页)', operationId: 'getUsersPage' })
+  @ApiSuccessResponse(UserPageDataDto, '查询用户分页列表成功')
   @UseGuards(AuthGuard('jwt'))
   @Post(`list/page`)
   getUsersPage(
@@ -56,6 +68,7 @@ export class UserController {
   }
 
   @ApiOperation({ summary: '创建用户', operationId: 'createUser' })
+  @ApiSuccessResponse(CreateUserDataDto, '创建用户成功')
   @Post()
   async createUser(
     @Req() request: Request,
@@ -74,6 +87,7 @@ export class UserController {
   }
 
   @ApiOperation({ summary: '根据id查询用户', operationId: 'getUserById' })
+  @ApiSuccessResponse(UserDataDto, '查询用户成功')
   @UseGuards(AuthGuard('jwt'))
   @Get(`:id`)
   @ApiParam({
@@ -87,6 +101,7 @@ export class UserController {
   }
 
   @ApiOperation({ summary: '根据用户名查询用户', operationId: 'getUserByName' })
+  @ApiSuccessResponse(UserDataDto, '查询用户成功')
   @UseGuards(AuthGuard('jwt'))
   @Get()
   @ApiParam({
@@ -100,6 +115,7 @@ export class UserController {
   }
 
   @ApiOperation({ summary: '设置用户角色', operationId: 'setRoles' })
+  @ApiSuccessResponse(SetRolesDataDto, '设置用户角色成功')
   @Post('setRoles')
   async setRoles(@Body() dto: SetRolesDto) {
     return await this.userRoleService.setUserRoles(dto.userId, dto.roleIds);

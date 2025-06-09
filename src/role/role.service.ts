@@ -27,8 +27,17 @@ export class RoleService {
     });
   }
 
-  update(updateRoleDto: UpdateRoleDto) {
-    return this.roleRepository.save(updateRoleDto);
+  async update(updateRoleDto: UpdateRoleDto) {
+    const role = await this.roleRepository.findOne({
+      where: { code: updateRoleDto.code },
+    });
+
+    if (!role) {
+      return null;
+    }
+
+    Object.assign(role, updateRoleDto);
+    return this.roleRepository.save(role);
   }
 
   remove(code: string) {

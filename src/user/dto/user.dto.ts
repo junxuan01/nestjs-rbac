@@ -36,3 +36,55 @@ export class SearchUserDto {
   @ApiProperty({ required: true, example: 10, description: '当前条数' })
   pageSize?: number;
 }
+
+// 响应DTO
+export class UserDataDto {
+  @ApiProperty({ description: '用户ID', example: '1' })
+  id: string;
+
+  @ApiProperty({ description: '用户名', example: 'admin' })
+  name: string;
+
+  @ApiProperty({ description: '邮箱', example: 'admin@example.com' })
+  mail: string;
+}
+
+export class UserListDataDto {
+  @ApiProperty({ description: '用户列表', type: [UserDataDto] })
+  users: UserDataDto[];
+
+  @ApiProperty({ description: '总数', example: 100 })
+  total?: number;
+}
+
+export class PageMetaDto {
+  @ApiProperty({ description: '总条数', example: 100 })
+  totalItems: number;
+
+  @ApiProperty({ description: '每页条数', example: 10 })
+  itemsPerPage: number;
+
+  @ApiProperty({ description: '总页数', example: 10 })
+  totalPages: number;
+
+  @ApiProperty({ description: '当前页', example: 1 })
+  currentPage: number;
+}
+
+export class UserPageDataDto {
+  @ApiProperty({ description: '用户列表', type: [UserDataDto] })
+  items: UserDataDto[];
+
+  @ApiProperty({ description: '分页信息', type: PageMetaDto })
+  meta: PageMetaDto;
+}
+
+export class CreateUserDataDto {
+  @ApiProperty({ description: '创建成功的用户ID', example: '1' })
+  id: string;
+}
+
+export class SetRolesDataDto {
+  @ApiProperty({ description: '设置结果', example: 'success' })
+  result: string;
+}

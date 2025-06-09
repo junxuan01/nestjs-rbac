@@ -10,3 +10,11 @@ export class LoginDto {
   @IsNotEmpty({ message: '密码必填' })
   password: string;
 }
+
+export class LoginDataDto {
+  @ApiProperty({
+    description: 'JWT访问令牌',
+    example: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...',
+  })
+  token: string;
+}
